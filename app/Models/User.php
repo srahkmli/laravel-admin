@@ -10,6 +10,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public function movies()
+    {
+        return $this->hasOne(Movies::class);
+    }
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**

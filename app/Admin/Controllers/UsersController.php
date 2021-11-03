@@ -2,14 +2,19 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\Replicate;
+use App\Admin\Forms\Suggestion;
 use App\Models\User;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
+use App\Admin\Forms\Setting;
+
 class UsersController extends AdminController
 {
+
     /**
      * Title for current resource.
      *
@@ -35,7 +40,12 @@ class UsersController extends AdminController
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
+        $grid->actions(function ($actions) {
+            $actions->disableDelete();
+            $actions->add(new Replicate);
+        });
         return $grid;
+
     }
 
     /**
@@ -77,4 +87,30 @@ class UsersController extends AdminController
 
         return $form;
     }
+    public function setting(Content $content)
+    {
+        $content
+            ->title('Search')
+            ->row(new Search());
+
+        // If there is data returned from the backend, take it out of the session and display it at the bottom of the form
+        if ($result = session('result')) {
+            $content->row('<pre>'.json_encode($result).'</pre>');
+        }
+
+        return $content;
+    }
+    public function suggestion(Content $content)
+    {
+        $forms = [
+            'Movies' => Form\Suggestion::class,
+        ];
+
+        return $content
+            ->title('Tools')
+            ->body(Tab::forms($forms));
+        //->title('User-suggestions')
+        // ->body(new Suggestion());
+    }
+
 }

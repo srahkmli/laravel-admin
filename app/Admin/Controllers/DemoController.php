@@ -3,24 +3,35 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use Encore\Admin\Controllers\ModelForm;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Tree;
+use App\Models\Movies;
+use App\Models\User;
+
+use Encore\Admin\Form;
+use Encore\Admin\Grid;
+use Encore\Admin\Show;
+
 
 class DemoController extends Controller
 {
-    use ModelForm;
 
     public function index()
-    {/**/
-        return Admin::content(function (Content $content) {
-            $content->header('Categories');
-            $content->body(Category::tree());
-        });
+    {
+
+        $grid = new Grid(new User);
+
+        $grid->column('id')->sortable();
+        $grid->column('name');
 
 
+        return $grid;
+
+        $grid = new Grid(new Movies);
+        $grid->column('id');
+        $grid->column('user_id');
+        $grid->column('title');
+
+        return $grid;
 
     }
+
 }

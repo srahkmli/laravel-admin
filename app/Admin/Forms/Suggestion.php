@@ -2,20 +2,18 @@
 
 namespace App\Admin\Forms;
 
-
-use App\Models\User;
-
+use App\Models\Movies;
 use Encore\Admin\Widgets\Form;
 use Illuminate\Http\Request;
 
-class Setting extends Form
+class Suggestion extends Form
 {
     /**
      * The form title.
      *
      * @var string
      */
-    public $title = 'User-name-change';
+    public $title = 'User-rate-movie';
 
     /**
      * Handle the form request.
@@ -27,14 +25,12 @@ class Setting extends Form
     public function handle(Request $request)
     {
         //dump($request->all());
-
-;
-$rateUpdate = User::where('id', $request->get('uID'))->
-    update(['name' => $request->get('uName')]);
+        $rateUpdate = Movies::where('user_id', $request->get('uID'))->
+            update(['rate' => $request->get('rate-movie')]);
 
         admin_success('Processed successfully.');
-
         return back();
+
     }
 
     /**
@@ -42,8 +38,13 @@ $rateUpdate = User::where('id', $request->get('uID'))->
      */
     public function form()
     {
-$this->text('uID')->rules('required');
-$this->text('uName')->rules('required');
+        //   $this->text('id');
+        $this->text('uID');
+
+        $this->text('rate-movie');
+
+        // $restaurants = User::all()->pluck('name', 'id');
+        // $this->hidden('user_id');
 
     }
 
@@ -55,6 +56,7 @@ $this->text('uName')->rules('required');
     public function data()
     {
         return [
-             ];
+            // 'user_id' => \request()->get('id'),
+        ];
     }
 }

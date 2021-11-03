@@ -3,14 +3,10 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Movies;
-use App\Models\User;
-
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-
-use Encore\Admin\Facades\Admin;
 
 class MovieController extends AdminController
 {
@@ -27,60 +23,50 @@ class MovieController extends AdminController
      *
      * @return Grid
      */
-     public function grid()
+    public function grid()
     {
-     $grid = new Grid(new Movies());
+        $grid = new Grid(new Movies());
 
-        $grid->column('id', __('Id'));
+        //  $grid->column('id', __('Id'));
         $grid->column('title', __('Title'));
-        $grid->column('director', __('Director'));
-        $grid->column('describe', __('Describe'));
-        $grid->column('rate', __('Rate'));
-        $grid->column('released', __('Released'));
-        $grid->column('release_at', __('Release at'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        //  $grid->column('director', __('Director'));
+        //  $grid->column('describe', __('Describe'));
+        // $grid->column('rate', __('Rate'));
+        // $grid->column('released', __('Released'));
+        // $grid->column('release_at', __('Release at'));
+        // $grid->column('created_at', __('Created at'));
+        //$grid->column('updated_at', __('Updated at'));
+        $grid->column('rate')->label([
+            1 => 'default',
+            5 => 'warning',
+            9 => 'success',
+            10 => 'info',
+        ]);
+        $grid->column('release_at')->editable('datetime');
 
-return $grid;
+        $grid->filter(function ($filter) {
+            $filter->scope('directors')->where('director', '15');
+        });
+        $grid->actions(function ($actions) {
+
+            $actions->disableEdit();
+            $actions->disableView();
+        });
+        $grid->column('released')->filter([
+            1 => 'yes',
+            0 => 'Not yet',
+        ]);
+        $grid->quickCreate(function (Grid\Tools\QuickCreate$create) {
+            $create->text('title', 'Title');
+            $create->integer('rate', 'Rate');
+            $create->datetime('released', 'Released');
+        });
+
+        $grid->column('title')->filter('like');
 
 
+        return $grid;
 
- /*
-$grid = new Grid(new Movies);
-
-// The first column displays the id field and sets the column as a sortable column
-$grid->id('ID')->sortable();
-
-// The second column shows the title field, because the title field name and the Grid object's title method conflict, so use Grid's column () method instead
-$grid->column('title');
-
-// The third column shows the director field, which is set by the display($callback) method to display the corresponding user name in the users table
-$grid->director()->display(function ($userId) {
-    return User::find($userId)->name;
-});
-
-// The fourth column appears as the describe field
-$grid->describe();
-
-// The fifth column is displayed as the rate field
-$grid->rate();
-
-// The sixth column shows the released field, formatting the display output through the display($callback) method
-$grid->released('Release?')->display(function ($released) {
-    return $released ? 'yes' : 'no';
-});
-
-// The following shows the columns for the three time fields
-$grid->release_at();
-$grid->created_at();
-$grid->updated_at();
-
-// The filter($callback) method is used to set up a simple search box for the table
-$grid->filter(function ($filter) {
-
-    // Sets the range query for the created_at field
-    $filter->between('created_at', 'Created Time')->datetime();
-}); */
     }
 
     /**
@@ -115,13 +101,14 @@ $grid->filter(function ($filter) {
     {
         $form = new Form(new Movies());
 
-         $form->text('title', __('Title'));
+        $form->text('title', __('Title'));
         $form->number('director', __('Director'));
         $form->text('describe', __('Describe'));
         $form->switch('rate', __('Rate'));
         $form->text('released', __('Released'));
         $form->datetime('release_at', __('Release at'))->default(date('Y-m-d H:i:s'));
 /* */
+
         return $form;
     }
 }

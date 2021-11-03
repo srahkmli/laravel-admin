@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Routing\Router;/*
+use Illuminate\Routing\Router; /*
+
 use UsersController;
 use DemoController;
-use MovieController;*/
+*/
 Admin::routes();
 
 Route::group([
@@ -15,6 +16,9 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
 $router->resource('demo/users', UsersController::class);
+/**/
+$router->resource('setting', FormController::class);
+
 
 $router->resource('movies', MovieController::class);
 $router->resource('categories', DemoController::class);
