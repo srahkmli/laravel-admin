@@ -1,65 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel Admin Panel for Movie and User Management
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a simple Laravel-based admin panel that allows administrators to manage movies and users. It includes controllers for adding movies and managing user accounts.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Movie Management**: Admins can add, edit, and delete movie entries.
+- **User Management**: Admins can manage users by adding, updating, or deleting their accounts.
+- **Simple Authentication**: Basic authentication system to secure the admin panel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before you begin, ensure you have met the following requirements:
 
-## Learning Laravel
+- PHP >= 7.4
+- Composer
+- Laravel >= 8.0
+- MySQL or another database supported by Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Follow these steps to get the project up and running:
 
-## Laravel Sponsors
+1. **Clone the repository**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    ```bash
+    git clone https://github.com/srahkmli/laravel-admin-movie-user.git
+    cd laravel-admin-movie-user
+    ```
 
-### Premium Partners
+2. **Install dependencies**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    Run the following command to install all necessary dependencies:
+
+    ```bash
+    composer install
+    ```
+
+3. **Set up environment variables**
+
+    Duplicate the `.env.example` file and rename it to `.env`. Then, configure your database connection and other environment settings.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+4. **Generate the application key**
+
+    ```bash
+    php artisan key:generate
+    ```
+
+5. **Run migrations**
+
+    Run the migrations to set up the database tables.
+
+    ```bash
+    php artisan migrate
+    ```
+
+6. **Seed the database (optional)**
+
+    Optionally, you can seed the database with some sample data:
+
+    ```bash
+    php artisan db:seed
+    ```
+
+7. **Start the development server**
+
+    Start the Laravel development server:
+
+    ```bash
+    php artisan serve
+    ```
+
+    The application will be accessible at `http://127.0.0.1:8000`.
+
+## Usage
+
+### Admin Panel
+
+Once the server is running, you can access the admin panel by visiting `http://127.0.0.1:8000/admin`. The following pages are available:
+
+- **Movies**: Manage movies, including adding, updating, or deleting movie entries.
+- **Users**: Manage users, including adding, updating, or deleting user accounts.
+
+### Controllers
+
+1. **MovieController**: Manages the movie database. You can perform actions like adding new movies, editing movie details, and deleting movies.
+
+    - **Method**: `POST /movies` to add a movie.
+    - **Method**: `PUT /movies/{id}` to edit a movie.
+    - **Method**: `DELETE /movies/{id}` to delete a movie.
+
+2. **UserController**: Manages user accounts. You can add new users, edit their details, or delete them.
+
+    - **Method**: `POST /users` to add a user.
+    - **Method**: `PUT /users/{id}` to update user details.
+    - **Method**: `DELETE /users/{id}` to delete a user.
+
+### Authentication
+
+The admin panel is protected by a simple authentication system. You can log in with the admin credentials.
+
+## Routes
+
+- `GET /admin`: The main dashboard.
+- `GET /admin/movies`: Movie management page.
+- `GET /admin/users`: User management page.
+- `POST /admin/movies`: Create a new movie.
+- `POST /admin/users`: Create a new user.
+- `PUT /admin/movies/{id}`: Update an existing movie.
+- `PUT /admin/users/{id}`: Update an existing user.
+- `DELETE /admin/movies/{id}`: Delete a movie.
+- `DELETE /admin/users/{id}`: Delete a user.
+
+## Testing
+
+To run tests, use the following command:
+
+```bash
+php artisan test
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Feel free to fork this project, make changes, and submit a pull request if you want to contribute improvements.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
